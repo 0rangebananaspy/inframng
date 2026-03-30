@@ -1,3 +1,7 @@
+--- includes/helpers.php (原始)
+
+
++++ includes/helpers.php (修改后)
 <?php
 /**
  * Path Helper Functions
