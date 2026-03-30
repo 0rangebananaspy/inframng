@@ -81,6 +81,10 @@
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+    <?php
+    $config = require __DIR__ . '/../config/config.php';
+    $basePath = $config['base_path'] ?? '';
+    ?>
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
         <aside class="w-64 glass-card hidden md:flex flex-col z-20">
@@ -92,22 +96,22 @@
             </div>
             
             <nav class="flex-1 p-4 overflow-y-auto">
-                <a href="/dashboard/index.php" class="sidebar-link flex items-center p-3 rounded-lg mb-2 <?= basename($_SERVER['PHP_SELF']) == 'index.php' ? 'bg-primary text-white' : '' ?>">
+                <a href="<?= $basePath ?>/dashboard/index.php" class="sidebar-link flex items-center p-3 rounded-lg mb-2 <?= basename($_SERVER['PHP_SELF']) == 'index.php' && strpos($_SERVER['PHP_SELF'], 'dashboard') ? 'bg-primary text-white' : '' ?>">
                     <i class="fa-duotone fa-grid-2 w-6"></i>
                     <span>Dashboard</span>
                 </a>
                 
                 <div class="pt-4 pb-2">
                     <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider px-3 mb-2">Infrastructure</p>
-                    <a href="/modules/devices/index.php" class="sidebar-link flex items-center p-3 rounded-lg mb-2 <?= strpos($_SERVER['PHP_SELF'], 'devices') ? 'bg-primary text-white' : '' ?>">
+                    <a href="<?= $basePath ?>/modules/devices/index.php" class="sidebar-link flex items-center p-3 rounded-lg mb-2 <?= strpos($_SERVER['PHP_SELF'], 'devices') ? 'bg-primary text-white' : '' ?>">
                         <i class="fa-duotone fa-microchip w-6"></i>
                         <span>Devices</span>
                     </a>
-                    <a href="/modules/vms/proxmox.php" class="sidebar-link flex items-center p-3 rounded-lg mb-2 <?= strpos($_SERVER['PHP_SELF'], 'proxmox') ? 'bg-primary text-white' : '' ?>">
+                    <a href="<?= $basePath ?>/modules/vms/proxmox.php" class="sidebar-link flex items-center p-3 rounded-lg mb-2 <?= strpos($_SERVER['PHP_SELF'], 'proxmox') ? 'bg-primary text-white' : '' ?>">
                         <i class="fa-duotone fa-cloud w-6"></i>
                         <span>Proxmox</span>
                     </a>
-                    <a href="/modules/vms/virtual-machines.php" class="sidebar-link flex items-center p-3 rounded-lg mb-2 <?= strpos($_SERVER['PHP_SELF'], 'virtual') ? 'bg-primary text-white' : '' ?>">
+                    <a href="<?= $basePath ?>/modules/vms/virtual-machines.php" class="sidebar-link flex items-center p-3 rounded-lg mb-2 <?= strpos($_SERVER['PHP_SELF'], 'virtual') ? 'bg-primary text-white' : '' ?>">
                         <i class="fa-duotone fa-desktop w-6"></i>
                         <span>Virtual Machines</span>
                     </a>
@@ -116,9 +120,13 @@
                 <?php if ($auth->isAdmin()): ?>
                 <div class="pt-4 pb-2">
                     <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider px-3 mb-2">Administration</p>
-                    <a href="/modules/users/index.php" class="sidebar-link flex items-center p-3 rounded-lg mb-2 <?= strpos($_SERVER['PHP_SELF'], 'users') ? 'bg-primary text-white' : '' ?>">
+                    <a href="<?= $basePath ?>/modules/users/index.php" class="sidebar-link flex items-center p-3 rounded-lg mb-2 <?= strpos($_SERVER['PHP_SELF'], 'users') && !strpos($_SERVER['PHP_SELF'], 'fields') ? 'bg-primary text-white' : '' ?>">
                         <i class="fa-duotone fa-users w-6"></i>
                         <span>Users</span>
+                    </a>
+                    <a href="<?= $basePath ?>/modules/users/fields.php" class="sidebar-link flex items-center p-3 rounded-lg mb-2 <?= strpos($_SERVER['PHP_SELF'], 'fields') ? 'bg-primary text-white' : '' ?>">
+                        <i class="fa-duotone fa-list-check w-6"></i>
+                        <span>Custom Fields</span>
                     </a>
                 </div>
                 <?php endif; ?>
@@ -138,7 +146,7 @@
                         <p class="text-xs text-gray-500 capitalize"><?= htmlspecialchars($_SESSION['role']) ?></p>
                     </div>
                 </div>
-                <a href="/modules/auth/logout.php" class="mt-2 flex items-center justify-center w-full p-2 rounded-lg bg-red-500 hover:bg-red-600 text-white transition-colors">
+                <a href="<?= $basePath ?>/modules/auth/logout.php" class="mt-2 flex items-center justify-center w-full p-2 rounded-lg bg-red-500 hover:bg-red-600 text-white transition-colors">
                     <i class="fa-duotone fa-sign-out-alt mr-2"></i>Logout
                 </a>
             </div>
@@ -170,14 +178,15 @@
                     </button>
                 </div>
                 <nav class="p-4">
-                    <a href="/dashboard/index.php" class="block p-3 rounded-lg mb-2 hover:bg-primary hover:text-white">Dashboard</a>
-                    <a href="/modules/devices/index.php" class="block p-3 rounded-lg mb-2 hover:bg-primary hover:text-white">Devices</a>
-                    <a href="/modules/vms/proxmox.php" class="block p-3 rounded-lg mb-2 hover:bg-primary hover:text-white">Proxmox</a>
-                    <a href="/modules/vms/virtual-machines.php" class="block p-3 rounded-lg mb-2 hover:bg-primary hover:text-white">Virtual Machines</a>
+                    <a href="<?= $basePath ?>/dashboard/index.php" class="block p-3 rounded-lg mb-2 hover:bg-primary hover:text-white">Dashboard</a>
+                    <a href="<?= $basePath ?>/modules/devices/index.php" class="block p-3 rounded-lg mb-2 hover:bg-primary hover:text-white">Devices</a>
+                    <a href="<?= $basePath ?>/modules/vms/proxmox.php" class="block p-3 rounded-lg mb-2 hover:bg-primary hover:text-white">Proxmox</a>
+                    <a href="<?= $basePath ?>/modules/vms/virtual-machines.php" class="block p-3 rounded-lg mb-2 hover:bg-primary hover:text-white">Virtual Machines</a>
                     <?php if ($auth->isAdmin()): ?>
-                    <a href="/modules/users/index.php" class="block p-3 rounded-lg mb-2 hover:bg-primary hover:text-white">Users</a>
+                    <a href="<?= $basePath ?>/modules/users/index.php" class="block p-3 rounded-lg mb-2 hover:bg-primary hover:text-white">Users</a>
+                    <a href="<?= $basePath ?>/modules/users/fields.php" class="block p-3 rounded-lg mb-2 hover:bg-primary hover:text-white">Custom Fields</a>
                     <?php endif; ?>
-                    <a href="/modules/auth/logout.php" class="block p-3 rounded-lg bg-red-500 text-white">Logout</a>
+                    <a href="<?= $basePath ?>/modules/auth/logout.php" class="block p-3 rounded-lg bg-red-500 text-white">Logout</a>
                 </nav>
             </div>
         </div>

@@ -1,5 +1,7 @@
 <?php
 // Root redirect to login
-header('Location: /modules/auth/login.php');
+$config = require __DIR__ . '/config/config.php';
+$basePath = $config['base_path'] ?? '';
+header('Location: ' . $basePath . '/modules/auth/login.php');
 exit;
 ?>
