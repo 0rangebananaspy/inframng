@@ -1,3 +1,4 @@
+<?php $config = require __DIR__ . '/../../config/config.php'; $basePath = $config['base_path'] ?? ''; ?>
 <div class="space-y-6">
     <!-- Welcome Section -->
     <div class="glass-card rounded-2xl p-6">
@@ -68,7 +69,7 @@
     <!-- Main Modules Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Devices Module -->
-        <a href="/modules/devices/index.php" class="glass-card rounded-2xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-1 group">
+        <a href="<?= $basePath ?>/modules/devices/index.php" class="glass-card rounded-2xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-1 group">
             <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                 <i class="fa-duotone fa-microchip text-3xl text-white"></i>
             </div>
@@ -81,7 +82,7 @@
         </a>
 
         <!-- Proxmox Module -->
-        <a href="/modules/vms/proxmox.php" class="glass-card rounded-2xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-1 group">
+        <a href="<?= $basePath ?>/modules/vms/proxmox.php" class="glass-card rounded-2xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-1 group">
             <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-700 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                 <i class="fa-duotone fa-cloud text-3xl text-white"></i>
             </div>
@@ -94,7 +95,7 @@
         </a>
 
         <!-- Virtual Machines Module -->
-        <a href="/modules/vms/virtual-machines.php" class="glass-card rounded-2xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-1 group">
+        <a href="<?= $basePath ?>/modules/vms/virtual-machines.php" class="glass-card rounded-2xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-1 group">
             <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-700 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                 <i class="fa-duotone fa-desktop text-3xl text-white"></i>
             </div>
@@ -108,7 +109,7 @@
 
         <?php if ($auth->isAdmin()): ?>
         <!-- Users Module -->
-        <a href="/modules/users/index.php" class="glass-card rounded-2xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-1 group">
+        <a href="<?= $basePath ?>/modules/users/index.php" class="glass-card rounded-2xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-1 group">
             <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                 <i class="fa-duotone fa-users text-3xl text-white"></i>
             </div>
@@ -121,7 +122,7 @@
         </a>
 
         <!-- Custom Fields Module -->
-        <a href="/modules/users/fields.php" class="glass-card rounded-2xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-1 group">
+        <a href="<?= $basePath ?>/modules/users/fields.php" class="glass-card rounded-2xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-1 group">
             <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-pink-700 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                 <i class="fa-duotone fa-list-check text-3xl text-white"></i>
             </div>

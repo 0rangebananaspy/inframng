@@ -3,11 +3,14 @@ session_start();
 require_once __DIR__ . '/../../includes/Database.php';
 require_once __DIR__ . '/../../includes/Auth.php';
 
+$config = require __DIR__ . '/../../config/config.php';
+$basePath = $config['base_path'] ?? '';
+
 $auth = new Auth();
 
 // Redirect if already logged in
 if ($auth->isLoggedIn()) {
-    header('Location: /dashboard/index.php');
+    header('Location: ' . $basePath . '/dashboard/index.php');
     exit;
 }
 
@@ -20,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($username) || empty($password)) {
         $error = 'Username and password are required';
     } elseif ($auth->login($username, $password)) {
-        header('Location: /dashboard/index.php');
+        header('Location: ' . $basePath . '/dashboard/index.php');
         exit;
     } else {
         $error = 'Invalid username or password';

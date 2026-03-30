@@ -1,11 +1,14 @@
 <?php
 class Auth {
     private $db;
-
+    private $basePath;
+    
     public function __construct() {
         $this->db = Database::getInstance();
+        $config = require __DIR__ . '/../config/config.php';
+        $this->basePath = $config['base_path'] ?? '';
     }
-
+    
     public function login($username, $password) {
         $users = $this->db->read('users');
         
@@ -23,12 +26,12 @@ class Auth {
         }
         return false;
     }
-
+    
     public function logout() {
         session_destroy();
         session_start();
     }
-
+    
     public function isLoggedIn() {
         if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             return false;
@@ -43,15 +46,15 @@ class Auth {
         $_SESSION['last_activity'] = time();
         return true;
     }
-
+    
     public function isAdmin() {
         return isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
     }
-
+    
     public function isOperator() {
         return isset($_SESSION['role']) && $_SESSION['role'] === 'operator';
     }
-
+    
     public function getCurrentUser() {
         if (!$this->isLoggedIn()) {
             return null;
@@ -65,7 +68,7 @@ class Auth {
         }
         return null;
     }
-
+    
     public function hashPassword($password) {
         return password_hash($password, PASSWORD_ARGON2ID, [
             'memory_cost' => 65536,
@@ -73,12 +76,18 @@ class Auth {
             'threads' => 3
         ]);
     }
+    
+    public function getBasePath() {
+        return $this->basePath;
+    }
 }
 
 function requireAuth() {
     $auth = new Auth();
     if (!$auth->isLoggedIn()) {
-        header('Location: /modules/auth/login.php');
+        $config = require __DIR__ . '/../../config/config.php';
+        $basePath = $config['base_path'] ?? '';
+        header('Location: ' . $basePath . '/modules/auth/login.php');
         exit;
     }
 }
@@ -86,7 +95,9 @@ function requireAuth() {
 function requireAdmin() {
     $auth = new Auth();
     if (!$auth->isAdmin()) {
-        header('Location: /dashboard/index.php');
+        $config = require __DIR__ . '/../../config/config.php';
+        $basePath = $config['base_path'] ?? '';
+        header('Location: ' . $basePath . '/dashboard/index.php');
         exit;
     }
 }
