@@ -1,3 +1,14 @@
+--- config/config.php (原始)
+<?php
+return [
+    'app_name' => 'InfraData Manager',
+    'version' => '1.0.0',
+    'data_path' => __DIR__ . '/../data/',
+    'encryption_key' => 'YourSecretKey2025ChangeThisInProduction!',
+    'session_timeout' => 3600,
+];
+
++++ config/config.php (修改后)
 <?php
 // Base Configuration for InfraData Manager
 // Adjust BASE_PATH according to your deployment directory
